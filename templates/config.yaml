@@ -1,0 +1,201 @@
+proxy-providers:
+
+proxies:
+
+mixed-port: 7890
+ipv6: true
+allow-lan: true
+unified-delay: false
+tcp-concurrent: true
+external-controller: 127.0.0.1:9097
+external-ui: ui
+external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+secret: "admin123456"
+
+geodata-mode: true
+geox-url:
+  geoip: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat"
+  geosite: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
+  mmdb: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb"
+  asn: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb"
+
+find-process-mode: strict
+client-fingerprint: chrome
+
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+sniffer:
+  enable: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  skip-domain:
+    - "Mijia Cloud"
+    - "+.push.apple.com"
+
+tun:
+  enable: true
+  stack: mixed
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+  auto-route: true
+  auto-redirect: true
+  auto-detect-interface: true
+
+dns:
+  default-nameserver:
+  - 2400:3200::1
+  - 2400:3200:baba::1
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001
+  - '2402:4e00::'
+  - 2001:4860:4860::8888
+  - 2001:4860:4860::8844
+  - 1.1.1.1
+  - 1.0.0.1
+  - 8.8.8.8
+  - 8.8.4.4
+  - 223.5.5.5
+  - 223.6.6.6
+  - 119.29.29.29
+  - 119.28.28.28
+  direct-nameserver:
+  - https://dns.google/dns-query
+  - tls://dns.google
+  - https://cloudflare-dns.com/dns-query
+  - tls://one.one.one.one
+  - https://dns.alidns.com/dns-query
+  - https://doh.pub/dns-query
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001
+  - 2001:4860:4860::8888
+  - 2001:4860:4860::8844
+  - 1.1.1.1
+  - 1.0.0.1
+  - 8.8.8.8
+  - 8.8.4.4
+  - 114.114.114.114
+  - 114.114.115.115
+  - 223.5.5.5
+  - 223.6.6.6
+  - 119.29.29.29
+  - 119.28.28.28
+  direct-nameserver-follow-policy: false
+  enable: true
+  enhanced-mode: fake-ip
+  fake-ip-filter:
+  - '*.lan'
+  - '*.local'
+  - '*.arpa'
+  - time.*.com
+  - ntp.*.com
+  - time.*.com
+  - +.market.xiaomi.com
+  - localhost.ptlogin2.qq.com
+  - '*.msftncsi.com'
+  - www.msftconnecttest.com
+  fake-ip-filter-mode: blacklist
+  fake-ip-range: 198.18.0.1/16
+  fallback:
+  - https://dns.google/dns-query
+  - tls://dns.google
+  - https://cloudflare-dns.com/dns-query
+  - tls://one.one.one.one
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001
+  - 2001:4860:4860::8888
+  - 2001:4860:4860::8844
+  - 1.1.1.1
+  - 1.0.0.1
+  - 8.8.8.8
+  - 8.8.4.4
+  fallback-filter:
+    domain:
+    - +.google.com
+    - +.facebook.com
+    - +.youtube.com
+    geoip: true
+    geoip-code: CN
+    ipcidr:
+    - 240.0.0.0/4
+    - 0.0.0.0/32
+  ipv6: true
+  listen: 0.0.0.0:1053
+  nameserver:
+  - https://dns.alidns.com/dns-query
+  - https://doh.pub/dns-query
+  - 2400:3200::1
+  - 2400:3200:baba::1
+  - '2402:4e00::'
+  - 223.5.5.5
+  - 223.6.6.6
+  - 119.29.29.29
+  - 119.28.28.28
+  prefer-h3: false
+  proxy-server-nameserver:
+  - https://dns.google/dns-query
+  - tls://dns.google
+  - https://cloudflare-dns.com/dns-query
+  - tls://one.one.one.one
+  - https://dns.alidns.com/dns-query
+  - https://doh.pub/dns-query
+  - 2606:4700:4700::1111
+  - 2606:4700:4700::1001
+  - 2001:4860:4860::8888
+  - 2001:4860:4860::8844
+  - 2400:3200::1
+  - 2400:3200:baba::1
+  - '2402:4e00::'
+  - 1.1.1.1
+  - 1.0.0.1
+  - 8.8.8.8
+  - 8.8.4.4
+  - 223.5.5.5
+  - 223.6.6.6
+  - 119.29.29.29
+  - 119.28.28.28
+  respect-rules: false
+  use-hosts: false
+  use-system-hosts: false
+
+proxy-groups:
+  # - name: "PROXY"
+  #   type: select
+  #   use:
+  #     - airport1
+
+rules:
+  - GEOIP,lan,DIRECT,no-resolve
+  - GEOSITE,private,DIRECT
+  - GEOSITE,category-ads-all,REJECT
+  - GEOSITE,apple,DIRECT
+  - GEOSITE,microsoft,DIRECT
+  - GEOSITE,steam,DIRECT
+  - GEOSITE,category-games-cn,DIRECT
+  - GEOSITE,github,PROXY
+  - GEOSITE,twitter,PROXY
+  - GEOSITE,youtube,PROXY
+  - GEOSITE,google,PROXY
+  - GEOSITE,telegram,PROXY
+  - GEOSITE,netflix,PROXY
+  - GEOSITE,bilibili,DIRECT
+  - GEOSITE,bahamut,PROXY
+  - GEOSITE,spotify,PROXY
+  - GEOSITE,CN,DIRECT
+  - GEOSITE,geolocation-!cn,PROXY
+
+  - GEOIP,google,PROXY
+  - GEOIP,netflix,PROXY
+  - GEOIP,telegram,PROXY
+  - GEOIP,twitter,PROXY
+  - GEOIP,CN,DIRECT
+  - MATCH,PROXY
+
