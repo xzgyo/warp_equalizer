@@ -68,11 +68,11 @@ def gen_clash_config(start_port: int = 1080, end_port: int = 1087):
 
 def main(argc: int, argv: list[str]) -> int:
   docker_compose_content = gen_docker_compose(1080, 1080 + int(argv[1]))
-  with open("docker-compose.yml", "w") as f:
+  with open("output/docker-compose.yml", "w") as f:
     print(f"docker-compose.yml:\n{docker_compose_content}\n")
     f.write(docker_compose_content)
   clash_config_content = gen_clash_config(1080, 1080 + int(argv[1]))
-  with open("clash_config.yaml", "w") as f:
+  with open("output/clash_config.yaml", "w") as f:
     print(f"clash_config.yaml:\n{clash_config_content}\n")
     f.write(clash_config_content)
   return 0
