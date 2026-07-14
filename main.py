@@ -2,7 +2,7 @@ import sys
 
 def gen_docker_compose(start_port: int = 1080, end_port: int = 1087):
   all_str = "services:\n"
-  for i in range(start_port, end_port + 1):
+  for i in range(start_port, end_port):
     all_str += f"""  warp_{i}:
     build: .
     image: warp_daisuki:latest
@@ -30,8 +30,6 @@ def gen_docker_compose(start_port: int = 1080, end_port: int = 1087):
         - subnet: 172.20.0.0/24
         - subnet: "fd00:dead:beef::/48"
 """
-  # with open("docker-compose.yml", "w") as f:
-  #   f.write(all_str)
   return all_str
 
 def gen_clash_config(start_port: int = 1080, end_port: int = 1087):
@@ -40,7 +38,7 @@ def gen_clash_config(start_port: int = 1080, end_port: int = 1087):
   proxy_names = []
   proxy_texts = []
   
-  for port in range(start_port, end_port + 1):
+  for port in range(start_port, end_port):
     name = f"Warp-{port}"
     proxy_names.append(name)
     proxy_texts.append(f"  - name: \"{name}\"")
@@ -71,9 +69,11 @@ def gen_clash_config(start_port: int = 1080, end_port: int = 1087):
 def main(argc: int, argv: list[str]) -> int:
   docker_compose_content = gen_docker_compose(1080, 1080 + int(argv[1]))
   with open("docker-compose.yml", "w") as f:
+    print(f"docker-compose.yml:\n{docker_compose_content}\n")
     f.write(docker_compose_content)
   clash_config_content = gen_clash_config(1080, 1080 + int(argv[1]))
   with open("clash_config.yaml", "w") as f:
+    print(f"clash_config.yaml:\n{clash_config_content}\n")
     f.write(clash_config_content)
   return 0
 
