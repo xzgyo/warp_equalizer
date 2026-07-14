@@ -1,3 +1,4 @@
+import os
 import sys
 
 def gen_docker_compose(start_port: int = 1080, end_port: int = 1087):
@@ -67,6 +68,12 @@ def gen_clash_config(start_port: int = 1080, end_port: int = 1087):
   return "".join(new_lines)
 
 def main(argc: int, argv: list[str]) -> int:
+  # check if the output directory exists, if not, create it
+  if not os.path.exists("output"):
+    os.makedirs("output")
+  if argc < 2:
+    print("Usage: python main.py <number_of_warp_instances>")
+    return 1
   docker_compose_content = gen_docker_compose(1080, 1080 + int(argv[1]))
   with open("output/docker-compose.yml", "w") as f:
     print(f"docker-compose.yml:\n{docker_compose_content}\n")
